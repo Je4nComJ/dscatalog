@@ -1,10 +1,11 @@
 package com.devsuperior.dscatalog.entities;
 
 import jakarta.persistence.*;
-import org.hibernate.engine.jdbc.BinaryStream;
 
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "tb_category")
@@ -20,6 +21,9 @@ public class Category {
 
     @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
     private Instant updatedAt;
+
+    @ManyToMany(mappedBy = "categories")
+    private Set<Product> products = new HashSet<>();
 
     public Category() {
     }
@@ -51,6 +55,10 @@ public class Category {
 
     public Instant getUpdatedAt() {
         return updatedAt;
+    }
+
+    public Set<Product> getProducts() {
+        return products;
     }
 
     @PrePersist
